@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:wb="http://open.weibo.com/wb">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>东南大学·天气感知偏差舆情研究</title>
+    <!-- 引入微博官方 JS SDK（必须放在 head 中） -->
+    <script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        /* 全局样式：简洁、专业、学术感 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', '微软雅黑', system-ui, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            max-width: 680px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+            padding: 36px 32px;
+            border: 1px solid #e9edf4;
+        }
+
+        /* 应用图标区域 */
+        .app-icon {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .app-icon img {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            box-shadow: 0 6px 14px rgba(0, 20, 60, 0.08);
+            border: 1px solid #eef2f7;
+            object-fit: cover;
+            background: #0b2e4e; 
+        }
+
+        /* 标题与应用名称 */
+        .app-name {
+            font-size: 28px;
+            font-weight: 600;
+            color: #0b2e4e;   /* 东南大学深蓝主色调 */
+            text-align: center;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #dce3ec;
+            padding-bottom: 18px;
+        }
+
+        /* 应用简介/介绍 */
+        .app-description {
+            background: #f8faff;
+            padding: 20px 22px;
+            border-radius: 16px;
+            margin: 24px 0 28px 0;
+            border-left: 6px solid #1a4d7a;
+        }
+
+        .app-description h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 12px;
+        }
+
+        .app-description p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .app-description .highlight {
+            background: #e3ecf5;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 500;
+            color: #0f3b5e;
+        }
+
+        /* 微博组件容器 */
+        .weibo-component {
+            text-align: center;
+            margin-top: 20px;
+            padding: 18px 10px;
+            background: #fafcfe;
+            border-radius: 16px;
+            border: 1px dashed #a6c1dc;
+        }
+
+        .weibo-component .hint {
+            font-size: 14px;
+            color: #4a6582;
+            margin-bottom: 18px;
+        }
+
+        /* 微博关注按钮实际区域 */
+        .weibo-follow-area {
+            min-height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 底部备案/说明 */
+        .footer-note {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 13px;
+            color: #7a8a9e;
+            border-top: 1px solid #e2e9f0;
+            padding-top: 20px;
+        }
+
+        .footer-note a {
+            color: #1a4d7a;
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- 应用图标：请确保 app-icon.png 放在同目录下 -->
+        <div class="app-icon">
+            <img src="app-icon.png" alt="东南大学应用图标">
+        </div>
+
+        <!-- 应用名称 -->
+        <div class="app-name">
+            东南大学 · 天气感知偏差舆情研究
+        </div>
+
+        <!-- 应用简介 -->
+        <div class="app-description">
+            <h3>📋 应用简介</h3>
+            <p>本应用由 <strong>东南大学</strong> 学术团队开发，旨在利用 <span class="highlight">微博商业数据API</span> 获取公开的社交媒体内容，用于非商业性的学术课题研究。</p>
+            <p>当前主要研究方向：公众对“<strong>天气预报不准</strong>”的感知偏差与舆情时空特征分析。所有数据仅用于内部科研，严格遵循数据安全与隐私保护规范。</p>
+            <p>🔬 项目支持：东南大学 · 交通/气象交叉学科研究组</p>
+        </div>
+
+        <!-- 微博组件区域（已嵌入关注按钮） -->
+        <div class="weibo-component">
+            <div class="hint">
+                ⚡ 官方微博 · 关注我们
+            </div>
+            <div class="weibo-follow-area">
+                <!-- 微博关注按钮 WBML 代码（已按你的配置生成） -->
+                <wb:follow-button uid="2991975565" type="red_1" width="67" height="24" ></wb:follow-button>
+            </div>
+            <p style="font-size:13px; color:#7d95af; margin-top:16px;">
+                ✔ 本页面已嵌入微博官方组件，符合微博开放平台审核要求。
+            </p>
+        </div>
+
+        <!-- 底部信息 -->
+        <div class="footer-note">
+            © 2025 东南大学 · 天气感知研究组  <br>
+            <a href="https://www.seu.edu.cn" target="_blank">东南大学官方网站</a>  |  用于微博开放平台应用地址审核
+        </div>
+    </div>
+</body>
+</html>

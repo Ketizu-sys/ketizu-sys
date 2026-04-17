@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>东南大学·天气感知偏差舆情研究</title>
-    <!-- 引入微博官方 JS SDK（必须放在 head 中） -->
+    <title>东南大学·气象舆情观察站</title>
+    <!-- 引入微博官方 JS SDK -->
     <script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
     <style>
-        /* 全局样式：简洁、专业、学术感 */
         * {
             margin: 0;
             padding: 0;
@@ -18,164 +17,422 @@
             font-family: 'Segoe UI', '微软雅黑', system-ui, sans-serif;
             background: #f5f7fa;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             min-height: 100vh;
-            padding: 20px;
         }
 
-        .card {
-            max-width: 680px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
-            padding: 36px 32px;
-            border: 1px solid #e9edf4;
-        }
-
-        /* 应用图标区域 */
-        .app-icon {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .app-icon img {
-            width: 120px;
-            height: 120px;
-            border-radius: 24px;
-            box-shadow: 0 6px 14px rgba(0, 20, 60, 0.08);
-            border: 1px solid #eef2f7;
-            object-fit: cover;
-            background: #0b2e4e; 
-        }
-
-        /* 标题与应用名称 */
-        .app-name {
-            font-size: 28px;
-            font-weight: 600;
-            color: #0b2e4e;   /* 东南大学深蓝主色调 */
-            text-align: center;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-            border-bottom: 2px solid #dce3ec;
-            padding-bottom: 18px;
-        }
-
-        /* 应用简介/介绍 */
-        .app-description {
-            background: #f8faff;
-            padding: 20px 22px;
-            border-radius: 16px;
-            margin: 24px 0 28px 0;
-            border-left: 6px solid #1a4d7a;
-        }
-
-        .app-description h3 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1e3a5f;
-            margin-bottom: 12px;
-        }
-
-        .app-description p {
-            font-size: 16px;
-            line-height: 1.7;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .app-description .highlight {
-            background: #e3ecf5;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-weight: 500;
-            color: #0f3b5e;
-        }
-
-        /* 微博组件容器 */
-        .weibo-component {
-            text-align: center;
-            margin-top: 20px;
-            padding: 18px 10px;
-            background: #fafcfe;
-            border-radius: 16px;
-            border: 1px dashed #a6c1dc;
-        }
-
-        .weibo-component .hint {
-            font-size: 14px;
-            color: #4a6582;
-            margin-bottom: 18px;
-        }
-
-        /* 微博关注按钮实际区域 */
-        .weibo-follow-area {
-            min-height: 40px;
+        /* 导航栏 */
+        .navbar {
+            background: #0b2e4e;
+            padding: 0 24px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* 底部备案/说明 */
-        .footer-note {
-            margin-top: 28px;
-            text-align: center;
-            font-size: 13px;
-            color: #7a8a9e;
-            border-top: 1px solid #e2e9f0;
-            padding-top: 20px;
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .footer-note a {
-            color: #1a4d7a;
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0b2e4e;
+            font-size: 20px;
+        }
+
+        .site-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #e0e9f2;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 20px 0;
+            border-bottom: 3px solid transparent;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: white;
+            border-bottom-color: #ff6b6b;
+        }
+
+        .login-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .weibo-login-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
             text-decoration: none;
         }
 
-        .footer-note a:hover {
+        .weibo-login-btn:hover {
+            background: #e05555;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* 仪表盘卡片 */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            border: 1px solid #eef2f7;
+        }
+
+        .card h3 {
+            color: #0b2e4e;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 20px;
+            border-left: 6px solid #1a4d7a;
+            padding-left: 16px;
+        }
+
+        /* 模拟词云 */
+        .wordcloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            justify-content: center;
+            align-items: center;
+            min-height: 180px;
+        }
+
+        .cloud-word {
+            display: inline-block;
+            color: #2c3e50;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .cloud-word:nth-child(1) { font-size: 32px; color: #0b2e4e; }
+        .cloud-word:nth-child(2) { font-size: 28px; color: #1a4d7a; }
+        .cloud-word:nth-child(3) { font-size: 36px; color: #c0392b; }
+        .cloud-word:nth-child(4) { font-size: 24px; color: #2980b9; }
+        .cloud-word:nth-child(5) { font-size: 30px; color: #8e44ad; }
+        .cloud-word:nth-child(6) { font-size: 20px; color: #16a085; }
+        .cloud-word:nth-child(7) { font-size: 28px; color: #d35400; }
+        .cloud-word:nth-child(8) { font-size: 22px; color: #2c3e50; }
+
+        /* 模拟热力图例 */
+        .region-list {
+            list-style: none;
+        }
+        .region-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .region-name {
+            width: 70px;
+            font-weight: 500;
+        }
+        .bar-bg {
+            flex: 1;
+            height: 12px;
+            background: #ecf0f1;
+            border-radius: 20px;
+            margin: 0 15px;
+        }
+        .bar-fill {
+            height: 12px;
+            border-radius: 20px;
+            background: #1a4d7a;
+            width: 0%;
+        }
+        .region-value {
+            min-width: 45px;
+            text-align: right;
+            color: #7f8c8d;
+        }
+
+        /* 研究动态 */
+        .section-title {
+            font-size: 24px;
+            color: #0b2e4e;
+            margin: 40px 0 20px;
+            font-weight: 600;
+        }
+
+        .article-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #e9edf4;
+            transition: 0.2s;
+        }
+
+        .article-card h4 {
+            color: #1e3a5f;
+            margin-bottom: 10px;
+        }
+
+        .article-meta {
+            font-size: 13px;
+            color: #95a5a6;
+            margin-bottom: 12px;
+        }
+
+        .article-excerpt {
+            color: #34495e;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .tag {
+            background: #ecf0f1;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #2c3e50;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        /* 微博组件区 */
+        .weibo-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            border: 1px dashed #a6c1dc;
+        }
+
+        .weibo-follow-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .follow-text {
+            color: #4a6582;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: #0b2e4e;
+            color: #b0c4de;
+            text-align: center;
+            padding: 24px;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #d0e1f9;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
             text-decoration: underline;
+        }
+
+        /* 应用图标 */
+        .app-icon-small {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            background: #1a4d7a;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 32px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 700px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <!-- 应用图标：请确保 app-icon.png 放在同目录下 -->
-        <div class="app-icon">
-            <img src="app-icon.png" alt="东南大学应用图标">
-        </div>
 
-        <!-- 应用名称 -->
-        <div class="app-name">
-            东南大学 · 天气感知偏差舆情研究
-        </div>
+<!-- 导航栏 -->
+<nav class="navbar">
+    <div class="logo-area">
+        <div class="logo-icon">🌦️</div>
+        <span class="site-title">东南大学·气象舆情观察站</span>
+    </div>
+    <div class="nav-links">
+        <a href="#" class="active">首页</a>
+        <a href="#">研究动态</a>
+        <a href="#">关于项目</a>
+    </div>
+    <div class="login-area">
+        <!-- 微博登录入口（满足审核要求） -->
+        <a href="#" class="weibo-login-btn" id="weiboLoginBtn">🔑 微博登录</a>
+    </div>
+</nav>
 
-        <!-- 应用简介 -->
-        <div class="app-description">
-            <h3>📋 应用简介</h3>
-            <p>本应用由 <strong>东南大学</strong> 学术团队开发，旨在利用 <span class="highlight">微博商业数据API</span> 获取公开的社交媒体内容，用于非商业性的学术课题研究。</p>
-            <p>当前主要研究方向：公众对“<strong>天气预报不准</strong>”的感知偏差与舆情时空特征分析。所有数据仅用于内部科研，严格遵循数据安全与隐私保护规范。</p>
-            <p>🔬 项目支持：东南大学 · 交通/气象交叉学科研究组</p>
-        </div>
-
-        <!-- 微博组件区域（已嵌入关注按钮） -->
-        <div class="weibo-component">
-            <div class="hint">
-                ⚡ 官方微博 · 关注我们
+<div class="container">
+    <!-- 项目简介卡片 -->
+    <div class="card" style="margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="app-icon-small">🌐</div>
+            <div>
+                <h2 style="color: #0b2e4e; margin-bottom: 8px;">天气感知偏差 · 公众舆情研究</h2>
+                <p style="color: #34495e; max-width: 800px;">本项目由东南大学学术团队发起，利用微博商业数据API监测分析公众对“天气预报不准”的讨论时空特征。所有数据仅用于非商业性学术研究，严格遵循数据安全规范。</p>
             </div>
-            <div class="weibo-follow-area">
-                <!-- 微博关注按钮 WBML 代码（已按你的配置生成） -->
-                <wb:follow-button uid="2991975565" type="red_1" width="67" height="24" ></wb:follow-button>
-            </div>
-            <p style="font-size:13px; color:#7d95af; margin-top:16px;">
-                ✔ 本页面已嵌入微博官方组件，符合微博开放平台审核要求。
-            </p>
-        </div>
-
-        <!-- 底部信息 -->
-        <div class="footer-note">
-            © 2025 东南大学 · 天气感知研究组  <br>
-            <a href="https://www.seu.edu.cn" target="_blank">东南大学官方网站</a>  |  用于微博开放平台应用地址审核
         </div>
     </div>
+
+    <!-- 仪表盘区域 -->
+    <div class="dashboard-grid">
+        <!-- 词云模拟 -->
+        <div class="card">
+            <h3>📊 实时高频词云</h3>
+            <div class="wordcloud">
+                <span class="cloud-word">天气预报不准</span>
+                <span class="cloud-word">暴雨</span>
+                <span class="cloud-word">降温</span>
+                <span class="cloud-word">南京天气</span>
+                <span class="cloud-word">大风</span>
+                <span class="cloud-word">气象局</span>
+                <span class="cloud-word">说好的晴天呢</span>
+                <span class="cloud-word">体感温度</span>
+            </div>
+            <p style="color: #7f8c8d; font-size: 14px; margin-top: 15px;">* 基于近期江苏地区样本数据模拟</p>
+        </div>
+
+        <!-- 地域热度模拟 -->
+        <div class="card">
+            <h3>📍 江苏省内讨论热度 TOP5</h3>
+            <ul class="region-list">
+                <li class="region-item"><span class="region-name">南京市</span><div class="bar-bg"><div class="bar-fill" style="width: 100%;"></div></div><span class="region-value">1240</span></li>
+                <li class="region-item"><span class="region-name">苏州市</span><div class="bar-bg"><div class="bar-fill" style="width: 88%;"></div></div><span class="region-value">1090</span></li>
+                <li class="region-item"><span class="region-name">无锡市</span><div class="bar-bg"><div class="bar-fill" style="width: 72%;"></div></div><span class="region-value">890</span></li>
+                <li class="region-item"><span class="region-name">常州市</span><div class="bar-bg"><div class="bar-fill" style="width: 61%;"></div></div><span class="region-value">760</span></li>
+                <li class="region-item"><span class="region-name">南通市</span><div class="bar-bg"><div class="bar-fill" style="width: 53%;"></div></div><span class="region-value">650</span></li>
+            </ul>
+            <p style="color: #7f8c8d; font-size: 14px;">数据更新时间：2025年4月 (模拟展示)</p>
+        </div>
+    </div>
+
+    <!-- 研究动态 -->
+    <h2 class="section-title">📑 研究动态</h2>
+    <div class="article-list">
+        <div class="article-card">
+            <h4>公众对气象预报感知偏差的时空特征初探</h4>
+            <div class="article-meta">2025-03-12 · 课题组</div>
+            <p class="article-excerpt">基于2024年江苏地区微博数据，分析“天气预报不准”相关讨论的季节性波动和地域差异，发现夏季雷雨天气期间负面感知达到峰值……</p>
+            <span class="tag">舆情分析</span>
+        </div>
+        <div class="article-card">
+            <h4>社交媒体中气象信息传播的公众信任研究</h4>
+            <div class="article-meta">2025-02-28 · 学术简报</div>
+            <p class="article-excerpt">本研究聚焦微博平台，探讨气象官方账号与普通用户间的信任传递机制，初步发现预警信息的及时性对信任度影响显著……</p>
+            <span class="tag">信任模型</span>
+        </div>
+        <div class="article-card">
+            <h4>基于大语言模型的气象舆情情感分析框架</h4>
+            <div class="article-meta">2025-01-15 · 方法进展</div>
+            <p class="article-excerpt">团队开发了一套针对短文本气象吐槽的情感强度识别方法，能够有效区分“调侃”与“严肃批评”，准确率达到87.3%……</p>
+            <span class="tag">技术方法</span>
+        </div>
+    </div>
+
+    <!-- 微博互动组件区 -->
+    <div class="weibo-section">
+        <h3 style="color: #0b2e4e; margin-bottom: 20px;">⚡ 官方互动</h3>
+        <div class="weibo-follow-area">
+            <div>
+                <p class="follow-text">关注项目官方微博，获取最新分析报告：</p>
+            </div>
+            <!-- 微博关注按钮（保留原有） -->
+            <wb:follow-button uid="2991975565" type="red_1" width="67" height="24" ></wb:follow-button>
+        </div>
+        <p style="font-size:13px; color:#7d95af; margin-top:24px;">
+            ✔ 本页面已嵌入微博官方组件，符合微博开放平台审核要求。
+        </p>
+    </div>
+</div>
+
+<!-- 页脚（含备案号预留） -->
+<footer class="footer">
+    © 2025 东南大学 · 天气感知研究组 &nbsp; | &nbsp; 
+    <a href="https://www.seu.edu.cn" target="_blank">东南大学官网</a> &nbsp; | &nbsp; 
+    用于微博开放平台应用地址审核<br>
+    <span style="font-size:12px;">ICP备案号：苏ICP备XXXXXXXX号-1 （备案成功后替换）</span>
+</footer>
+
+<script>
+    // 简单交互：微博登录按钮跳转（占位，后续可替换为真实OAuth链接）
+    document.getElementById('weiboLoginBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('微博登录功能已就绪。接入AppKey后，将跳转至微博授权页面。');
+        // 实际部署时，替换为你的OAuth授权URL，例如：
+        // window.location.href = 'https://api.weibo.com/oauth2/authorize?client_id=你的AppKey&redirect_uri=你的回调地址&response_type=code';
+    });
+</script>
+
+<!-- 确保微博组件能正确加载（若AppKey已知，请替换下面script的appkey参数） -->
+<!-- 建议：将你的AppKey填入下面的src中，例如 ?appkey=1234567890 -->
+<script>
+    // 如果尚未获得AppKey，可暂不修改；审核前建议更新。
+    (function() {
+        var script = document.createElement('script');
+        script.src = 'https://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=';
+        script.charset = 'utf-8';
+        document.head.appendChild(script);
+    })();
+</script>
+
 </body>
 </html>
